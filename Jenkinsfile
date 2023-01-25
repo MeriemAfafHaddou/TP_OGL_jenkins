@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-  stage ('Test') { // la phase build
+  stage ('test') { // la phase build
   steps {
   bat 'gradle test'
    junit 'build/test-results/test/TEST-Matrix.xml'
