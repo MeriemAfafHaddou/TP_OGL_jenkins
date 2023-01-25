@@ -41,9 +41,12 @@ pipeline {
                    steps {
                        bat 'gradlew publish'
                    }
-               }
-
-
+       }
+         stage(' deploy Mail Notification') {
+             steps {
+               mail(subject: 'TPOGL Jenkins notification', body: mail, cc: 'jm_haddou@esi.dz' ,bcc:'ji_abdelaziz@esi.dz')
+             }
+           }
 
 }
 }
