@@ -58,7 +58,7 @@ pipeline {
                mail(subject: 'Deployment succeeded', body: 'Deployment succeeded ', from: 'jm_haddou@esi.dz', to: 'ji_abdelaziz@esi.dz')
                notifyEvents message: 'Bonjour! : <b>Déploiement éffectué !</b> ! ', token: 'wNo2VBaS6pfTx8wP5S8XW0ZS36LivYsb'
              }
-
+           }
            }
 
 }
