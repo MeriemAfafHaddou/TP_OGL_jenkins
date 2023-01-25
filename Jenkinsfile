@@ -10,6 +10,14 @@ pipeline {
         fileIncludePattern: 'target/report.json'
         }
       }
+
+      stage('SonarQube analysis') {
+            steps{
+             withSonarQubeEnv("sonar") { // Will pick the global server connection you have configured
+               bat 'gradlew sonarqube' }
+            }
+
+          }
 }
 }
 
