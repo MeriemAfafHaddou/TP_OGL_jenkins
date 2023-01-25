@@ -42,24 +42,26 @@ pipeline {
                        bat 'gradlew publish'
                    }
        }
-         stage("notify"){
-            post{
-                 always {
-                        echo "End of Pipeline process"
-                        mail(subject: 'End of Process Pipeline : Result incoming ...', body: 'End of Process Pipeline : Result incoming ...', from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
-                      }
-                  failure {
-                         echo "Deployment failed"
-                         mail(subject: 'Deployment failed', body: 'Deployment failed ', from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
-                       }
-                         success {
-                               echo "Deployment succeeded"
-                               mail(subject: 'Deployment succeeded', body: 'Deployment succeeded ',  from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
-                               notifyEvents message: 'Bonjour! : <b>Déploiement éffectué !</b> ! ', token: 'wNo2VBaS6pfTx8wP5S8XW0ZS36LivYsb'
-                             }
+        stage('Notify') {
+                steps {
+                    echo "Notification..."
+                    notifyEvents message: 'Build is created with success', token: 'wNo2VBaS6pfTx8wP5S8XW0ZS36LivYsb'
+                }
             }
-         }
+          }
 
+
+          post {
+            success {
+                mail to: "jm_haddou@esi.dz",
+                subject: "Build Succeeded",
+                body: "This is an email that informs that the new Build is deployed with success!"
+            }
+            failure {
+                mail to: "jm_haddou@esi.dz",
+                subject: "Build failed",
+                body: "This is an email that informs that the new Build is deployed with failure!"
+            }
 }
 }
 
