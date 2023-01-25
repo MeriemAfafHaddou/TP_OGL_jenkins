@@ -42,11 +42,23 @@ pipeline {
                        bat 'gradlew publish'
                    }
        }
-         stage(' deploy Mail Notification') {
-             steps {
-               mail(subject: 'TPOGL Jenkins notification', body: mail, cc: 'jm_haddou@esi.dz' ,bcc:'ji_abdelaziz@esi.dz')
-             }
-           }
+         stage("notify"){
+            post{
+                 always {
+                        echo "End of Pipeline process"
+                        mail(subject: 'End of Process Pipeline : Result incoming ...', body: 'End of Process Pipeline : Result incoming ...', from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
+                      }
+                  failure {
+                         echo "Deployment failed"
+                         mail(subject: 'Deployment failed', body: 'Deployment failed ', from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
+                       }
+                         success {
+                               echo "Deployment succeeded"
+                               mail(subject: 'Deployment succeeded', body: 'Deployment succeeded ',  from: 'jm_haddou@esi.dz', to: 'ja_abdelaziz@esi.dz')
+                               notifyEvents message: 'Bonjour! : <b>Déploiement éffectué !</b> ! ', token: 'wNo2VBaS6pfTx8wP5S8XW0ZS36LivYsb'
+                             }
+            }
+         }
 
 }
 }
